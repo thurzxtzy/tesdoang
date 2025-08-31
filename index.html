@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DDOS Attack Tool</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #0b0c14, #1a1d2b, #0b0c14);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+    color: #eee;
+    font-family: 'Share Tech Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    user-select: none;
+  }
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  header {
+    background: #151a2b;
+    padding: 1.2rem;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #ff3b3b;
+    text-shadow: 0 0 10px #ff3b3b, 0 0 20px #ff6b6b, 0 0 35px #ff3b3b;
+    border-bottom: 2px solid #ff3b3b90;
+    position: relative;
+  }
+  header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ff3b3b, transparent);
+    animation: scanline 2.5s linear infinite;
+  }
+  @keyframes scanline {
+    0% { left: -60%; }
+    100% { left: 100%; }
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    gap: 1.3rem;
+  }
+
+  .input-box {
+    background: #151827;
+    padding: 1.2rem;
+    border-radius: 14px;
+    box-shadow: 0 0 15px rgba(255,59,59,0.25);
+    width: 90%;
+    max-width: 520px;
+    text-align: center;
+    border: 1px solid #ff3b3b40;
+  }
+
+  label {
+    font-size: 1rem;
+    color: #ccc;
+    text-shadow: 0 0 5px rgba(255,59,59,0.5);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  input[type="text"] {
+    padding: 1rem;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    border: 1px solid #ff3b3b60;
+    background: #181c2d;
+    color: #eee;
+    outline: none;
+    width: 100%;
+    font-family: 'Share Tech Mono', monospace;
+    text-align: center;
+    transition: 0.3s ease;
+  }
+  input[type="text"]:focus {
+    background: #222842;
+    box-shadow: 0 0 12px #ff3b3b;
+    border-color: #ff3b3b;
+  }
+
+  .console-wrapper {
+    width: 92%;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  #console {
+    background: #0d0f1a;
+    border-radius: 12px;
+    padding: 1rem;
+    min-height: 260px;
+    max-height: 310px;
+    overflow-y: auto;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #ff4c4c;
+    box-shadow: inset 0 0 25px rgba(255,76,76,0.5);
+    border: 1px solid #ff3b3b50;
+  }
+
+  .line {
+    padding: 3px 0;
+    text-shadow: 0 0 6px #ff3b3b;
+    animation: typing 0.4s steps(40, end);
+  }
+  @keyframes typing {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .buttons {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    margin-top: 0.6rem;
+  }
+
+  button {
+    flex: 1;
+    max-width: 200px;
+    background: linear-gradient(135deg, #ff3b3b, #ff7070);
+    color: white;
+    border: none;
+    padding: 0.95rem 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.25s ease;
+    box-shadow: 0 0 14px rgba(255,59,59,0.5), inset 0 0 7px rgba(255,255,255,0.25);
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+  }
+  button::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.15);
+    transform: skewX(-25deg);
+  }
+  button:hover::before {
+    animation: shine 0.9s forwards;
+  }
+  @keyframes shine {
+    100% { left: 120%; }
+  }
+  button:hover:not(:disabled) {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 25px rgba(255,59,59,0.9), inset 0 0 9px rgba(255,255,255,0.3);
+  }
+  button:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+  button:disabled {
+    background: #3a1a1a;
+    color: #777;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+</style>
+</head>
+<body>
+
+<header>DDOS ATTACK TOOL BY THURZX</header>
+
+<main>
+  <div class="input-box">
+    <label for="target">Masukkan Target URL / IP:</label>
+    <input type="text" id="target" placeholder="https://example.com atau 192.168.1.1" autocomplete="off" />
+  </div>
+
+  <div class="console-wrapper">
+    <div id="console" aria-live="polite" aria-atomic="false"></div>
+    <div class="buttons">
+      <button id="startBtn">🚀 START</button>
+      <button id="stopBtn" disabled>🛑 STOP</button>
+    </div>
+  </div>
+</main>
+
+<script>
+  const startBtn = document.getElementById('startBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const targetInput = document.getElementById('target');
+  const consoleDiv = document.getElementById('console');
+
+  let attackInterval = null;
+  let requestNumber = 0;
+
+  function scrollConsole() {
+    consoleDiv.scrollTop = consoleDiv.scrollHeight;
+  }
+
+  function printLine(text) {
+    const line = document.createElement('div');
+    line.classList.add('line');
+    line.textContent = text;
+    consoleDiv.appendChild(line);
+    scrollConsole();
+  }
+
+  function startAttack() {
+    const target = targetInput.value.trim();
+    if (!target) {
+      alert('Masukkan target URL atau IP terlebih dahulu!');
+      return;
+    }
+
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    targetInput.disabled = true;
+    consoleDiv.innerHTML = '';
+
+    printLine(`>> Initializing attack sequence on ${target}...`);
+
+    requestNumber = 0;
+
+    attackInterval = setInterval(() => {
+      requestNumber++;
+      printLine(`[+] Request #${requestNumber} sent to ${target}`);
+    }, 120);
+  }
+
+  function stopAttack() {
+    clearInterval(attackInterval);
+    attackInterval = null;
+    printLine('>> Attack stopped by user.');
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+    targetInput.disabled = false;
+  }
+
+  startBtn.addEventListener('click', startAttack);
+  stopBtn.addEventListener('click', stopAttack);
+
+  targetInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !startBtn.disabled) {
+      startAttack();
+    }
+  });
+</script>
+
+</body>
+</html>
